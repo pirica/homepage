@@ -8,7 +8,7 @@ You have a few options for deploying homepage, depending on your needs. We offer
 
 !!! info
 
-    Please note that when using features such as widgets, Homepage can access personal information (for example from your home automation system) and Homepage currently does not (and is not planned to) include any authentication layer itself. Thus, we recommend homepage be deployed behind a reverse proxy including authentication, SSL etc, and / or behind a VPN.
+    Please note that when using features such as widgets, Homepage can access personal information (for example from your home automation system) and Homepage currently does not (and is not planned to) include any authentication layer itself. If Homepage is reachable from any untrusted network, it **must** be deployed behind a reverse proxy (and/or VPN) that enforces authentication, TLS, and blocks direct IP access or unexpected Host headers. The built-in host + IP check is only a best-effort guard for local setups and should not be treated as security when exposed publicly.
 
 <br>
 
@@ -37,4 +37,4 @@ The value is a comma-separated (no spaces) list of allowed hosts (sometimes with
 
 If you are seeing errors about host validation, check the homepage logs and ensure that the host exactly as output in the logs is in the `HOMEPAGE_ALLOWED_HOSTS` list.
 
-This can be disabled by setting `HOMEPAGE_ALLOWED_HOSTS` to `*` but this is not recommended.
+This can be disabled by setting `HOMEPAGE_ALLOWED_HOSTS` to `*` but this is not recommended. By default, requests are also restricted to private/loopback client IPs; if your reverse proxy connects from a different IP (for example, a public IP), add it to `HOMEPAGE_ALLOWED_IPS` (comma-separated).
